@@ -1,6 +1,6 @@
 import { Stack, useLocalSearchParams } from "expo-router";
-import { use, useEffect, useState } from "react";
-import { ScrollView, Text, StyleSheet } from "react-native";
+import { useEffect, useState } from "react";
+import { ScrollView, Text, StyleSheet, Image, View } from "react-native";
 
 interface PokemonData{
     name: string;
@@ -48,9 +48,26 @@ export default function Details() {
             }}
             >
                 <Text style={styles.name}>{params.name}</Text>
+                
                 {pokemon && (
-                <Text>Peso: { pokemon.weight/10 } kg</Text>
+                    <>
+                        <View style={styles.pokemon}>
+                            <Image source={{uri: pokemon.sprites.front_default}}
+                                style={{ width: 150, height: 150 }} />
+                        </View>
+                        <View>
+                            <Text style={styles.subtitles}>Abilities:</Text>
+                            {pokemon.abilities.map((item, index) => (
+                                <Text key={index} style={styles.infos}>
+                                    { item.ability.name }
+                                </Text>
+                            ))}
+                        </View>
+
+                        <Text>Peso: {pokemon.weight / 10} kg</Text>
+                    </>
                 )}
+
             </ScrollView>
         </>
     );
@@ -62,12 +79,25 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
+    color: '#22356d',
   },
-  type: {
+  subtitles:{
     textTransform: 'capitalize',
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: 'bold',
-    color: 'gray',
-    textAlign: 'center',
+    textAlign: 'left',
+    color: '#22356d',
+  },
+  infos:{
+    textTransform: 'capitalize',
+    fontSize: 15,
+    textAlign: 'left',
+  },
+  pokemon: {
+    backgroundColor: '#dcdcdc',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 5,
   }
 })

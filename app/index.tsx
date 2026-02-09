@@ -2,7 +2,7 @@ import { Link } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView, Text, View, Image, StyleSheet } from "react-native";
 
-interface Pokemon{
+export interface Pokemon{
   name: string,
   image: string,
   imageBack: string,
@@ -16,7 +16,7 @@ interface PokemonTypes{
   }
 }
 
-const colorsByType = {
+export const colorsByType = {
   normal: "#A8A77A",
   fire: "#EE8130",
   water: "#6390F0",
@@ -47,7 +47,7 @@ export default function Pokedex() {
   async function fetchPokemons(){
     try{
       const response = await fetch(
-        "https://pokeapi.co/api/v2/pokemon/?limit=10"
+        "https://pokeapi.co/api/v2/pokemon/?limit=12"
       );
 
       const data = await response.json();

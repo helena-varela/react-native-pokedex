@@ -1,17 +1,23 @@
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView, Text, StyleSheet, Image, View } from "react-native";
+import { colorsByType } from "./index";
 
-interface PokemonData{
+interface PokemonData {
     name: string;
     weight: number;
     sprites: {
         front_default: string;
     };
+    types: {
+    type: {
+        name: keyof typeof colorsByType;
+    };
+    }[];
     abilities: {
-        ability: {
+    ability: {
         name: string;
-        };
+    };
     }[];
 }
 
@@ -51,9 +57,14 @@ export default function Details() {
                 
                 {pokemon && (
                     <>
-                        <View style={styles.pokemon}>
-                            <Image source={{uri: pokemon.sprites.front_default}}
-                                style={{ width: 150, height: 150 }} />
+                        <View style={[
+                            styles.pokemon, 
+                            { backgroundColor: colorsByType[pokemon.types[0].type.name] + 70 || '#dcdcdc' }
+                        ]}>
+                            <Image 
+                                source={{ uri: pokemon.sprites.front_default }}
+                                style={{ width: 150, height: 150 }} 
+                            />
                         </View>
                         <View>
                             <Text style={styles.subtitles}>Abilities:</Text>
